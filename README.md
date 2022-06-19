@@ -12,6 +12,10 @@
 2. Create database in mysql
 3. Go to conn.py and change the password
 
+## Running Test
+
+open terminal and run `python -m unittest discover`
+
 ## Running the app
 
 1. Run `python main.py` in the terminal
