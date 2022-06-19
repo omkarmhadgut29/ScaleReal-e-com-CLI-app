@@ -16,8 +16,8 @@ class Product:
     def add_products(self, category_id):
 
         product_name = input("Enter Product Name: ")
-        description = input("\nEnter description: ")
-        price = input("\nEnter Price: ")
+        description = input("Enter description: ")
+        price = input("Enter Price: ")
 
         sql = "INSERT INTO products (name, categories_id, description, price) VALUE (%s, %s, %s, %s);"
         val = (product_name, int(category_id), description, price)

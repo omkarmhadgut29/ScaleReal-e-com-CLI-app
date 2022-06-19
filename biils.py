@@ -3,6 +3,10 @@ import uuid
 from conn import ecom_cursor, ecom_db
 
 class Bills:
+    def __init__(self):
+        self.is_viewed = False
+        self.is_bill_genrated = False
+
     def view_bills(self, user_id):
 
         sql = f"SELECT id, name from categories;"
@@ -18,9 +22,11 @@ class Bills:
         for k, *rest in products:
             products_dict.setdefault(k, []).extend(rest)
 
+        self.is_viewed = True
+        print(f"self.is_viewed: {self.is_viewed}")
+        
         ecom_cursor.execute(f"SELECT DISTINCT transaction_id from bills where user_id={user_id}")
         transactions_ids = ecom_cursor.fetchall()
-
         print("\n------------Bills-------------\n")
 
         for transaction_id in transactions_ids:
@@ -50,6 +56,7 @@ class Bills:
             print(f"Final Price: {final_price}")
             print(f"Transaction id: {transaction_id}")
 
+            
             print("\n-------------------------------------------------------------------------------\n")
             
     def genarate_bill(self, user_id):
@@ -80,23 +87,9 @@ class Bills:
             ecom_cursor.execute(sql, val)
             ecom_db.commit()
 
+            self.is_bill_genrated = True
+
         print(f"\nYour transaction is successfuly comleted..")
         print(f"Order Bill: {total_price}")
         print(f"Transaction id: {transaction_id}")
         print("\n--------------------\n")
-
-
-
-
-# sql = f"SELECT categories.name AS category, products.name AS product FROM products INNER JOIN categories ON products.categories_id = categories.id where products.id={cart_item[1]};"
-#             ecom_cursor.execute(sql)
-#             new_result = ecom_cursor.fetchall()
-# print("--------------\n")
-#             print(f"Product: {new_result[0][1]}")
-#             print(f"Category: {new_result[0][0]}")
-#             print(f"Price: {price}")
-#             print(f"Quantity: {quantity}")
-#             print(f"Total Price: {cart_item[6]}")
-#             print(f"transaction id: {transaction_id}")
-
-#             print("\n--------------\n")

@@ -1,6 +1,9 @@
 from conn import ecom_cursor, ecom_db
 
 class Cart:
+    def __init__(self):
+        self.cart_item_getting = False
+        self.added_to_cart = False
 
     def view_cart(self, user_id):
         ecom_cursor.execute(f"SELECT * from cart where user_id={int(user_id)}")
@@ -11,6 +14,10 @@ class Cart:
         print("\n\n--------------------Cart-------------------------\n")
 
         for cart_item in result:
+
+            if cart_item:
+                self.cart_item_getting = True
+
             sql = f"SELECT categories.name AS category, products.name AS product FROM products INNER JOIN categories ON products.categories_id = categories.id where products.id={cart_item[1]};"
             ecom_cursor.execute(sql)
             new_result = ecom_cursor.fetchall()
@@ -52,6 +59,7 @@ class Cart:
             ecom_cursor.execute(sql, val)
 
             ecom_db.commit()
+            self.added_to_cart = True
 
         else:
             result = result[0]
@@ -62,6 +70,7 @@ class Cart:
             ecom_cursor.execute(sql, val)
 
             ecom_db.commit()
+            self.added_to_cart = True
 
         print("\n------Product Added to Cart.----------\n")
 
