@@ -1,4 +1,3 @@
-from categories import Categories
 from admin import Admin
 from user import User
 from conn import ecom_cursor
